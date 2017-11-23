@@ -21,6 +21,7 @@ public class AgeCheckingPersonCheckingService implements PersonCheckingService {
 		//remove::start[]
 		//tag::impl[]
 		boolean shouldGetBeer = personToCheck.age >= 20;
+		// mq发送消息
 		source.output().send(MessageBuilder.withPayload(new Verification(shouldGetBeer)).build());
 		return shouldGetBeer;
 		//end::impl[]

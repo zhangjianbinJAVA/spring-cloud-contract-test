@@ -7,6 +7,7 @@ import org.springframework.cloud.contract.spec.Contract
 Contract.make {
 	description("""
 Represents a successful scenario of getting a beer
+代表了一个成功的场景的啤酒
 
 ```
 given:

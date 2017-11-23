@@ -14,25 +14,25 @@ import org.springframework.stereotype.Component;
 @Component
 class BeerVerificationListener {
 
-	private static final Log log = LogFactory.getLog(BeerVerificationListener.class);
+    private static final Log log = LogFactory.getLog(BeerVerificationListener.class);
 
-	AtomicInteger eligibleCounter = new AtomicInteger();
-	AtomicInteger notEligibleCounter = new AtomicInteger();
+    AtomicInteger eligibleCounter = new AtomicInteger();
+    AtomicInteger notEligibleCounter = new AtomicInteger();
 
-	@StreamListener(Sink.INPUT)
-	public void listen(Verification verification) {
-		//remove::start[]
-		log.info("Received new verification");
-		if (verification.eligible) {
-			eligibleCounter.incrementAndGet();
-		} else {
-			notEligibleCounter.incrementAndGet();
-		}
-		//remove::end[]
-	}
+    @StreamListener(Sink.INPUT)
+    public void listen(Verification verification) {
+        //remove::start[]
+        log.info("Received new verification");
+        if (verification.eligible) {
+            eligibleCounter.incrementAndGet();
+        } else {
+            notEligibleCounter.incrementAndGet();
+        }
+        //remove::end[]
+    }
 
-	public static class Verification {
-		public boolean eligible;
-	}
+    public static class Verification {
+        public boolean eligible;
+    }
 
 }

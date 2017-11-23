@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
+//该接口是 sring cloud stream 中默认实现的 对输入消息通道绑定的定义
 @EnableBinding(Sink.class)
 public class ClientApplication {
 

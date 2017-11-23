@@ -9,12 +9,12 @@ import org.springframework.boot.test.json.JacksonTester;
  */
 public abstract class AbstractTest {
 
-	public JacksonTester<Person> json;
+    public JacksonTester<Person> json;
 
-	@Before
-	public void setup() {
-		ObjectMapper objectMappper = new ObjectMapper();
-		// Possibly configure the mapper
-		JacksonTester.initFields(this, objectMappper);
-	}
+    @Before
+    public void setup() {
+        ObjectMapper objectMappper = new ObjectMapper();
+        // Possibly configure the mapper
+        JacksonTester.initFields(this, objectMappper);
+    }
 }

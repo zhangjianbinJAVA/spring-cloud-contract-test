@@ -21,22 +21,26 @@ import static org.assertj.core.api.BDDAssertions.then;
 //remove::end[]
 public class BeerVerificationListenerClasspathTest extends AbstractTest {
 
-	@Autowired StubTrigger stubTrigger;
-	@Autowired BeerVerificationListener listener;
+    @Autowired
+    StubTrigger stubTrigger;
+    @Autowired
+    BeerVerificationListener listener;
 
-	@Test public void should_increase_the_eligible_counter_when_verification_was_accepted() throws Exception {
-		int initialCounter = listener.eligibleCounter.get();
+    @Test
+    public void should_increase_the_eligible_counter_when_verification_was_accepted() throws Exception {
+        int initialCounter = listener.eligibleCounter.get();
 
-		stubTrigger.trigger("accepted_verification");
+        stubTrigger.trigger("accepted_verification");
 
-		then(listener.eligibleCounter.get()).isGreaterThan(initialCounter);
-	}
+        then(listener.eligibleCounter.get()).isGreaterThan(initialCounter);
+    }
 
-	@Test public void should_increase_the_noteligible_counter_when_verification_was_rejected() throws Exception {
-		int initialCounter = listener.notEligibleCounter.get();
+    @Test
+    public void should_increase_the_noteligible_counter_when_verification_was_rejected() throws Exception {
+        int initialCounter = listener.notEligibleCounter.get();
 
-		stubTrigger.trigger("rejected_verification");
+        stubTrigger.trigger("rejected_verification");
 
-		then(listener.notEligibleCounter.get()).isGreaterThan(initialCounter);
-	}
+        then(listener.notEligibleCounter.get()).isGreaterThan(initialCounter);
+    }
 }

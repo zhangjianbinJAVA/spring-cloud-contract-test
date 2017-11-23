@@ -7,22 +7,22 @@ import org.junit.Before;
 
 public abstract class BeerRestBase {
 
-	@Before
-	public void setup() {
-		//remove::start[]
-		RestAssuredMockMvc.standaloneSetup(new StoutController(), new BuyController());
-		//remove::end[]
-	}
+    @Before
+    public void setup() {
+        //remove::start[]
+        RestAssuredMockMvc.standaloneSetup(new StoutController(), new BuyController());
+        //remove::end[]
+    }
 
-	//remove::start[]
-	//tag::assertmethods[]
-	protected void assertStatus(String status) {
-		BDDAssertions.then(status).isEqualToIgnoringCase(Status.NOT_OK.name());
-	}
+    //remove::start[]
+    //tag::assertmethods[]
+    protected void assertStatus(String status) {
+        BDDAssertions.then(status).isEqualToIgnoringCase(Status.NOT_OK.name());
+    }
 
-	protected void assertMessage(String message) {
-		BDDAssertions.then(message).contains("Go home!");
-	}
-	//end::assertmethods[]
-	//remove::end[]
+    protected void assertMessage(String message) {
+        BDDAssertions.then(message).contains("Go home!");
+    }
+    //end::assertmethods[]
+    //remove::end[]
 }

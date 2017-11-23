@@ -3,6 +3,7 @@ package contracts.beer.messaging
 org.springframework.cloud.contract.spec.Contract.make {
 	description("""
 Sends a negative verification message when person is not eligible to get the beer
+发送一个消极的验证消息当人没有资格得到啤酒
 
 ```
 given:

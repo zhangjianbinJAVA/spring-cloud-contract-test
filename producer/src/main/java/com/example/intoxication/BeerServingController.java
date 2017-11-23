@@ -11,51 +11,51 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class BeerServingController {
 
-	private final ResponseProvider responseProvider;
+    private final ResponseProvider responseProvider;
 
-	public BeerServingController(ResponseProvider responseProvider) {
-		this.responseProvider = responseProvider;
-	}
+    public BeerServingController(ResponseProvider responseProvider) {
+        this.responseProvider = responseProvider;
+    }
 
-	@RequestMapping(value = "/beer",
-			method=RequestMethod.POST,
-			consumes="application/json",
-			produces="application/json")
-	public Response check(@RequestBody Customer customer) {
-		//remove::start[]
-		return this.responseProvider.thereYouGo(customer);
-		//remove::end[return]
-	}
-	
+    @RequestMapping(value = "/beer",
+            method = RequestMethod.POST,
+            consumes = "application/json",
+            produces = "application/json")
+    public Response check(@RequestBody Customer customer) {
+        //remove::start[]
+        return this.responseProvider.thereYouGo(customer);
+        //remove::end[return]
+    }
+
 }
 
 interface ResponseProvider {
-	Response thereYouGo(Customer personToCheck);
+    Response thereYouGo(Customer personToCheck);
 }
 
 class Customer {
-	//remove::start[]
-	public String name;
+    //remove::start[]
+    public String name;
 
-	public Customer(String name) {
-		this.name = name;
-	}
+    public Customer(String name) {
+        this.name = name;
+    }
 
-	public Customer() {
-	}
-	//remove::end[]
+    public Customer() {
+    }
+    //remove::end[]
 }
 
 class Response {
-	public DrunkLevel previousStatus;
-	public DrunkLevel currentStatus;
+    public DrunkLevel previousStatus;
+    public DrunkLevel currentStatus;
 
-	public Response(DrunkLevel previousStatus, DrunkLevel currentStatus) {
-		this.previousStatus = previousStatus;
-		this.currentStatus = currentStatus;
-	}
+    public Response(DrunkLevel previousStatus, DrunkLevel currentStatus) {
+        this.previousStatus = previousStatus;
+        this.currentStatus = currentStatus;
+    }
 }
 
 enum DrunkLevel {
-	SOBER, TIPSY, DRUNK, WASTED
+    SOBER, TIPSY, DRUNK, WASTED
 }

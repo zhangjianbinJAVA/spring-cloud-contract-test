@@ -19,59 +19,75 @@ import static com.example.intoxication.DrunkLevel.WASTED;
 
 /**
  * Tests for the scenario based stub
+ * 测试基于场景的存根
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = BeerIntoxicationBase.Config.class)
 public abstract class BeerIntoxicationBase {
 
-	@Autowired WebApplicationContext webApplicationContext;
+    @Autowired
+    WebApplicationContext webApplicationContext;
 
-	@Before
-	public void setup() {
-		RestAssuredMockMvc.webAppContextSetup(webApplicationContext);
-	}
+    @Before
+    public void setup() {
+        RestAssuredMockMvc.webAppContextSetup(webApplicationContext);
+    }
 
-	@Configuration
-	@EnableAutoConfiguration
-	static class Config {
+    @Configuration
+    @EnableAutoConfiguration
+    static class Config {
 
-		@Bean BeerServingController controller() {
-			return new BeerServingController(responseProvider());
-		}
+        /**
+         * 实例化 controller
+         *
+         * @return
+         */
+        @Bean
+        BeerServingController controller() {
+            //注入服务端实现
+            return new BeerServingController(responseProvider());
+        }
 
-		@Bean ResponseProvider responseProvider() {
-			return new MockResponseProvider();
-		}
-	}
+        /**
+         * 服务端实现
+         *
+         * @return
+         */
+        @Bean
+        ResponseProvider responseProvider() {
+            return new MockResponseProvider();
+        }
+    }
 
-	//tag::mock[]
-	static class MockResponseProvider implements ResponseProvider {
+    //tag::mock[]
+    static class MockResponseProvider implements ResponseProvider {
 
-		private DrunkLevel previous = SOBER;
-		private DrunkLevel current = SOBER;
+        private DrunkLevel previous = SOBER;
+        private DrunkLevel current = SOBER;
 
-		@Override public Response thereYouGo(Customer personToCheck) {
-			//remove::start[]
-			if ("marcin".equals(personToCheck.name)) {
-				 switch (current) {
-				 case SOBER:
-				 	current = TIPSY;
-				 	previous = SOBER;
-					 break;
-				 case TIPSY:
-					 current = DRUNK;
-					 previous = TIPSY;
-					 break;
-				 case DRUNK:
-					 current = WASTED;
-					 previous = DRUNK;
-					 break;
-				 case WASTED:
-					 throw new UnsupportedOperationException("You can't handle it");
-				 }
-			}
-			return new Response(previous, current);//remove::end[return]
-		}
-	}
-	//end::mock[]
+        @Override
+        public Response thereYouGo(Customer personToCheck) {
+            //remove::start[]
+            if ("marcin".equals(personToCheck.name)) {
+                switch (current) {
+                    case SOBER:
+                        current = TIPSY;
+                        previous = SOBER;
+                        break;
+                    case TIPSY:
+                        current = DRUNK;
+                        previous = TIPSY;
+                        break;
+                    case DRUNK:
+                        current = WASTED;
+                        previous = DRUNK;
+                        break;
+                    case WASTED:
+                        throw new UnsupportedOperationException("You can't handle it");
+                }
+            }
+            return new Response(previous, current);//remove::end[return]
+        }
+    }
+    //end::mock[]
 }

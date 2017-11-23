@@ -1,9 +1,10 @@
 package contracts.beer.rest
 
 org.springframework.cloud.contract.spec.Contract.make {
-	request {
-		description("""
+    request {
+        description("""
 Represents a successful scenario of getting a beer
+代表了一个成功的场景的啤酒
 
 given:
 	client is old enough
@@ -12,26 +13,26 @@ when:
 then:
 	we'll grant him the beer
 """)
-		method 'POST'
-		url '/check'
-		body(
-				age: value(consumer(regex('[2-9][0-9]')))
-		)
-		headers {
-			header 'Content-Type', 'application/json'
-		}
-	}
-	response {
-		status 200
-		body( """
+        method 'POST'
+        url '/check'
+        body(
+                age: value(consumer(regex('[2-9][0-9]')))
+        )
+        headers {
+            header 'Content-Type', 'application/json'
+        }
+    }
+    response {
+        status 200
+        body("""
 			{
 				"status": "OK"
 			}
 			""")
-		headers {
-			header(
-					'Content-Type', value(consumer('application/json'),producer(regex('application/json.*')))
-			)
-		}
-	}
+        headers {
+            header(
+                    'Content-Type', value(consumer('application/json'), producer(regex('application/json.*')))
+            )
+        }
+    }
 }

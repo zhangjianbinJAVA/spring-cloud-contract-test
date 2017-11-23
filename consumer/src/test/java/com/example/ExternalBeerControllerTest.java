@@ -21,6 +21,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 /**
  * @author Marcin Grzejszczak
+ * <p>
+ * <p>
+ * 使用外部存储库中的存根 测试 beer_contracts
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.MOCK)
@@ -33,35 +36,40 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 //@org.junit.Ignore
 public class ExternalBeerControllerTest extends AbstractTest {
 
-	@Autowired MockMvc mockMvc;
-	@Autowired BeerController beerController;
+    @Autowired
+    MockMvc mockMvc;
+    @Autowired
+    BeerController beerController;
 
-	@Value("${stubrunner.runningstubs.beer-api-producer-external.port}") int producerPort;
+    @Value("${stubrunner.runningstubs.beer-api-producer-external.port}")
+    int producerPort;
 
-	@Before
-	public void setupPort() {
-		beerController.port = producerPort;
-	}
+    @Before
+    public void setupPort() {
+        beerController.port = producerPort;
+    }
 
-	@Test public void should_give_me_a_beer_when_im_old_enough() throws Exception {
-		//remove::start[]
-		mockMvc.perform(MockMvcRequestBuilders.post("/beer")
-				.contentType(MediaType.APPLICATION_JSON)
-				.content(json.write(new Person("marcin", 22)).getJson()))
-				.andExpect(status().isOk())
-				.andExpect(content().string("THERE YOU GO"));
-		//remove::end[]
-	}
+    @Test
+    public void should_give_me_a_beer_when_im_old_enough() throws Exception {
+        //remove::start[]
+        mockMvc.perform(MockMvcRequestBuilders.post("/beer")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json.write(new Person("marcin", 22)).getJson()))
+                .andExpect(status().isOk())
+                .andExpect(content().string("THERE YOU GO"));
+        //remove::end[]
+    }
 
-	@Test public void should_reject_a_beer_when_im_too_young() throws Exception {
-		//remove::start[]
-		mockMvc.perform(MockMvcRequestBuilders.post("/beer")
-				.contentType(MediaType.APPLICATION_JSON)
-				.content(json.write(new Person("marcin", 17)).getJson()))
-				.andExpect(status().isOk())
-				.andExpect(content().string("GET LOST"));
-		//remove::end[]
-	}
+    @Test
+    public void should_reject_a_beer_when_im_too_young() throws Exception {
+        //remove::start[]
+        mockMvc.perform(MockMvcRequestBuilders.post("/beer")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json.write(new Person("marcin", 17)).getJson()))
+                .andExpect(status().isOk())
+                .andExpect(content().string("GET LOST"));
+        //remove::end[]
+    }
 }
 
 

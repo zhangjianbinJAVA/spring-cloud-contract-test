@@ -18,56 +18,56 @@ import java.net.URI;
 @RestController
 class BeerController {
 
-	private final RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
 
-	int port = 8090;
+    int port = 8090;
 
-	BeerController(RestTemplate restTemplate) {
-		this.restTemplate = restTemplate;
-	}
+    BeerController(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
 
-	@RequestMapping(method = RequestMethod.POST,
-			value = "/beer",
-			consumes = MediaType.APPLICATION_JSON_VALUE)
-	public String gimmeABeer(@RequestBody Person person) throws MalformedURLException {
-		//remove::start[]
-		//tag::controller[]
-		ResponseEntity<Response> response = this.restTemplate.exchange(
-				RequestEntity
-						.post(URI.create("http://localhost:" + port + "/check"))
-						.contentType(MediaType.APPLICATION_JSON)
-						.body(person),
-				Response.class);
-		switch (response.getBody().status) {
-		case OK:
-			return "THERE YOU GO";
-		default:
-			return "GET LOST";
-		}
-		//end::controller[]
-		//remove::end[return]
-	}
+    @RequestMapping(method = RequestMethod.POST,
+            value = "/beer",
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    public String gimmeABeer(@RequestBody Person person) throws MalformedURLException {
+        //remove::start[]
+        //tag::controller[]
+        ResponseEntity<Response> response = this.restTemplate.exchange(
+                RequestEntity
+                        .post(URI.create("http://localhost:" + port + "/check"))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(person),
+                Response.class);
+        switch (response.getBody().status) {
+            case OK:
+                return "THERE YOU GO";
+            default:
+                return "GET LOST";
+        }
+        //end::controller[]
+        //remove::end[return]
+    }
 }
 
 class Person {
-	public String name;
-	public int age;
+    public String name;
+    public int age;
 
-	public Person(String name, int age) {
-		this.name = name;
-		this.age = age;
-	}
+    public Person(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
 
-	public Person() {
-	}
+    public Person() {
+    }
 }
 
 class Response {
-	public ResponseStatus status;
+    public ResponseStatus status;
 }
 
 enum ResponseStatus {
-	OK, NOT_OK
+    OK, NOT_OK
 }
 
 

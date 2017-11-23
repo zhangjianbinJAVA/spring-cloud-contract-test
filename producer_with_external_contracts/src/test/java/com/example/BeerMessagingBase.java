@@ -17,30 +17,32 @@ import java.util.concurrent.TimeUnit;
 @AutoConfigureMessageVerifier
 //remove::end[]
 public abstract class BeerMessagingBase {
-	//remove::start[]
-	@Inject MessageVerifier messaging;
-	//remove::end[]
-	@Autowired PersonCheckingService personCheckingService;
+    //remove::start[]
+    @Inject
+    MessageVerifier messaging;
+    //remove::end[]
+    @Autowired
+    PersonCheckingService personCheckingService;
 
-	@Before
-	public void setup() {
-		// let's clear any remaining messages
-		// output == destination or channel name
-		//remove::start[]
-		this.messaging.receive("output", 100, TimeUnit.MILLISECONDS);
-		//remove::end[]
-	}
+    @Before
+    public void setup() {
+        // let's clear any remaining messages
+        // output == destination or channel name
+        //remove::start[]
+        this.messaging.receive("output", 100, TimeUnit.MILLISECONDS);
+        //remove::end[]
+    }
 
-	public void clientIsOldEnough() {
-		//remove::start[]
-		personCheckingService.shouldGetBeer(new PersonToCheck(25));
-		//remove::end[]
-	}
+    public void clientIsOldEnough() {
+        //remove::start[]
+        personCheckingService.shouldGetBeer(new PersonToCheck(25));
+        //remove::end[]
+    }
 
-	public void clientIsTooYoung() {
-		//remove::start[]
-		personCheckingService.shouldGetBeer(new PersonToCheck(5));
-		//remove::end[]
-	}
-	
+    public void clientIsTooYoung() {
+        //remove::start[]
+        personCheckingService.shouldGetBeer(new PersonToCheck(5));
+        //remove::end[]
+    }
+
 }

@@ -9,7 +9,7 @@ import org.springframework.cloud.stream.messaging.Source;
 @EnableBinding(Source.class)
 public class ProducerApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(ProducerApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(ProducerApplication.class, args);
+    }
 }

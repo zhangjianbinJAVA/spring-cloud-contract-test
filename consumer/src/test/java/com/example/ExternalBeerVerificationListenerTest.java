@@ -24,28 +24,32 @@ import static org.assertj.core.api.BDDAssertions.then;
 //@org.junit.Ignore
 public class ExternalBeerVerificationListenerTest extends AbstractTest {
 
-	//remove::start[]
-	@Autowired StubTrigger stubTrigger;
-	//remove::end[]
-	@Autowired BeerVerificationListener listener;
+    //remove::start[]
+    @Autowired
+    StubTrigger stubTrigger;
+    //remove::end[]
+    @Autowired
+    BeerVerificationListener listener;
 
-	@Test public void should_increase_the_eligible_counter_when_positive_verification_takes_place() throws Exception {
-		int initialCounter = listener.eligibleCounter.get();
+    @Test
+    public void should_increase_the_eligible_counter_when_positive_verification_takes_place() throws Exception {
+        int initialCounter = listener.eligibleCounter.get();
 
-		//remove::start[]
-		stubTrigger.trigger("accepted_verification");
-		//remove::end[]
+        //remove::start[]
+        stubTrigger.trigger("accepted_verification");
+        //remove::end[]
 
-		then(listener.eligibleCounter.get()).isGreaterThan(initialCounter);
-	}
+        then(listener.eligibleCounter.get()).isGreaterThan(initialCounter);
+    }
 
-	@Test public void should_increase_the_noteligible_counter_when_negative_verification_takes_place() throws Exception {
-		int initialCounter = listener.notEligibleCounter.get();
+    @Test
+    public void should_increase_the_noteligible_counter_when_negative_verification_takes_place() throws Exception {
+        int initialCounter = listener.notEligibleCounter.get();
 
-		//remove::start[]
-		stubTrigger.trigger("rejected_verification");
-		//remove::end[]
+        //remove::start[]
+        stubTrigger.trigger("rejected_verification");
+        //remove::end[]
 
-		then(listener.notEligibleCounter.get()).isGreaterThan(initialCounter);
-	}
+        then(listener.notEligibleCounter.get()).isGreaterThan(initialCounter);
+    }
 }

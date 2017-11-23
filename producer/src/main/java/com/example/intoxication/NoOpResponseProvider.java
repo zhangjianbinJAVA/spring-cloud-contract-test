@@ -7,7 +7,8 @@ import org.springframework.stereotype.Service;
  */
 @Service
 class NoOpResponseProvider implements ResponseProvider {
-	@Override public Response thereYouGo(Customer personToCheck) {
-		return null;
-	}
+    @Override
+    public Response thereYouGo(Customer personToCheck) {
+        return null;
+    }
 }

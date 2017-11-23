@@ -24,6 +24,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
+ * 有状态的存根 测试
+ *
  * @author Marcin Grzejszczak
  */
 @RunWith(SpringRunner.class)
@@ -36,38 +38,50 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DirtiesContext
 public class IntoxicationControllerTest extends AbstractTest {
 
-	@Autowired MockMvc mockMvc;
-	@Autowired IntoxicationController intoxicationController;
+    @Autowired
+    MockMvc mockMvc;
 
-	//remove::start[]
-	@Value("${stubrunner.runningstubs.beer-api-producer.port}") int producerPort;
+    @Autowired
+    IntoxicationController intoxicationController;
 
-	@Before
-	public void setupPort() {
-		intoxicationController.port = producerPort;
-	}
-	//remove::end[]
+    //remove::start[]
+    @Value("${stubrunner.runningstubs.beer-api-producer.port}")
+    int producerPort;
 
-	@Test public void should_eventually_get_completely_wasted() throws Exception {
-		//remove::start[]
-		sendARequestAndExpectStatuses(SOBER, TIPSY);
-		sendARequestAndExpectStatuses(TIPSY, DRUNK);
-		sendARequestAndExpectStatuses(DRUNK, WASTED);
-		//remove::end[]
-	}
+    @Before
+    public void setupPort() {
+        intoxicationController.port = producerPort;
+    }
+    //remove::end[]
 
-	private void sendARequestAndExpectStatuses(DrunkLevel previousStatus, DrunkLevel currentStatus) throws Exception {
-		//remove::start[]
-		//tag::test[]
-		mockMvc.perform(MockMvcRequestBuilders.post("/wasted")
-				.contentType(MediaType.APPLICATION_JSON)
-				.content(json.write(new Person("marcin")).getJson()))
-				.andExpect(status().isOk())
-				.andExpect(content().json("{\"previousStatus\":\"" + previousStatus.name() +
-						"\",\"currentStatus\":\"" + currentStatus.name() + "\"}"));
-		//end::test[]
-		//remove::end[]
-	}
+    @Test
+    public void should_eventually_get_completely_wasted() throws Exception {
+        //remove::start[]
+        sendARequestAndExpectStatuses(SOBER, TIPSY);
+        sendARequestAndExpectStatuses(TIPSY, DRUNK);
+        sendARequestAndExpectStatuses(DRUNK, WASTED);
+        //remove::end[]
+    }
+
+    /**
+     * 发送请求 并期望的状态
+     *
+     * @param previousStatus 上一个的状态
+     * @param currentStatus  当前的状态
+     * @throws Exception
+     */
+    private void sendARequestAndExpectStatuses(DrunkLevel previousStatus, DrunkLevel currentStatus) throws Exception {
+        //remove::start[]
+        //tag::test[]
+        mockMvc.perform(MockMvcRequestBuilders.post("/wasted")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json.write(new Person("marcin")).getJson()))
+                .andExpect(status().isOk())
+                .andExpect(content().json("{\"previousStatus\":\"" + previousStatus.name() +
+                        "\",\"currentStatus\":\"" + currentStatus.name() + "\"}"));
+        //end::test[]
+        //remove::end[]
+    }
 }
 
 
